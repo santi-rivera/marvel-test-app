@@ -8,8 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
-import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
+import es.santirivera.pruebamarvel.util.loadUrl
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.MarvelFragment
 import es.santirivera.pruebamarvel.R
@@ -40,7 +40,7 @@ class ItemDetailFragment : MarvelFragment() {
         item?.let {
             binding.textViewCharacterName.text = it.name
             binding.textViewCharacterDescription.text = generateDescription(item!!)
-            Glide.with(requireContext()).load(it.image).placeholder(R.drawable.loading_spinner).into(binding.imageViewCharacter)
+            binding.imageViewCharacter.loadUrl(R.drawable.loading_spinner, it.image)
             val wikiUrl = it.wikiUrl
             if (wikiUrl.isNotEmpty())
                 binding.imageViewCharacter.setOnClickListener {

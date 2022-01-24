@@ -1,10 +1,10 @@
 package es.santirivera.pruebamarvel.list
 
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.ItemListContentBinding
+import es.santirivera.pruebamarvel.util.loadUrl
 
 class MarvelCharacterViewHolder(private val binding: ItemListContentBinding) :
     RecyclerView.ViewHolder(binding.root) {
@@ -16,12 +16,7 @@ class MarvelCharacterViewHolder(private val binding: ItemListContentBinding) :
 
     fun setElement(item: MarvelCharacter, callback: OnCharacterClickedCallback) {
         binding.textViewCharacterName.text = item.name
-
-        Glide.with(itemView.context)
-            .load(item.image)
-            .placeholder(R.drawable.loading_spinner)
-            .into(binding.imageViewCharacter)
-
+        binding.imageViewCharacter.loadUrl(R.drawable.loading_spinner, item.image)
         itemView.setOnClickListener {
             callback.onCharacterClicked(item)
         }
