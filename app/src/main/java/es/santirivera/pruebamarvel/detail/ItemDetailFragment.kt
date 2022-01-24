@@ -40,7 +40,7 @@ class ItemDetailFragment : MarvelFragment() {
         item?.let {
             binding.textViewCharacterName.text = it.name
             binding.textViewCharacterDescription.text = generateDescription(item!!)
-            Glide.with(requireContext()).load(it.image).into(binding.imageViewCharacter)
+            Glide.with(requireContext()).load(it.image).placeholder(R.drawable.loading_spinner).into(binding.imageViewCharacter)
             val wikiUrl = it.wikiUrl
             if (wikiUrl.isNotEmpty())
                 binding.imageViewCharacter.setOnClickListener {

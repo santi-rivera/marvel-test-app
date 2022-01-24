@@ -3,6 +3,7 @@ package es.santirivera.pruebamarvel.list
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import es.santirivera.domain.model.MarvelCharacter
+import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.ItemListContentBinding
 
 class MarvelCharacterViewHolder(private val binding: ItemListContentBinding) :
@@ -18,6 +19,7 @@ class MarvelCharacterViewHolder(private val binding: ItemListContentBinding) :
 
         Glide.with(itemView.context)
             .load(item.image)
+            .placeholder(R.drawable.loading_spinner)
             .into(binding.imageViewCharacter)
 
         itemView.setOnClickListener {
