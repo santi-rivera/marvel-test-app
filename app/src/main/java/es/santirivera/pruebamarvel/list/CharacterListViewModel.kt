@@ -19,7 +19,7 @@ class CharacterListViewModel @Inject constructor(private val getCharactersUseCas
     val characterList: LiveData<List<MarvelCharacter>> get() = _characterList
 
     private val _error = MutableLiveData<Exception>()
-    val error: LiveData<Exception> get() = _error
+    val exception: LiveData<Exception> get() = _error
 
     private var limit: Int = 10
 
@@ -35,8 +35,8 @@ class CharacterListViewModel @Inject constructor(private val getCharactersUseCas
         _characterList.value = response
     }
 
-    override fun onError(exception: Exception) {
-        _error.value = exception
+    override fun onError(error: Exception) {
+        _error.value = error
     }
 
 }

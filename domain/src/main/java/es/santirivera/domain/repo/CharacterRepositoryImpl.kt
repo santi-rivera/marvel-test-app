@@ -3,6 +3,7 @@ package es.santirivera.domain.repo
 
 import es.santirivera.data.api.MarvelDataSource
 import es.santirivera.data.api.model.ResponseCharacter
+import es.santirivera.domain.exception.EmptyListException
 import es.santirivera.domain.model.MarvelCharacter
 import java.lang.RuntimeException
 
@@ -12,7 +13,7 @@ class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : Charac
         return try {
             val list = dataSource.getCharacterList(limit, offset)
             if (list.data.results.isEmpty()){
-                throw RuntimeException("List is empty")
+                throw EmptyListException()
             } else {
                 val sanitizedList = ArrayList<MarvelCharacter>()
                 for (character in list.data.results){

@@ -26,7 +26,7 @@ class MarvelCharacterAdapter(
     override fun getItemCount() = values.size
 
     fun addAll(it: List<MarvelCharacter>) {
-        for (character in it){
+        for (character in it) {
             if (!values.contains(character))
                 values.add(character)
         }

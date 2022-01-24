@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">Prueba Marvel</string>
     <string name="unknown_host">Unknown host. Your are probably not connected to the internet.</string>
+    <string name="empty_list">Empty server response. You\'ve probably reached the end of the list.</string>
 </resources>

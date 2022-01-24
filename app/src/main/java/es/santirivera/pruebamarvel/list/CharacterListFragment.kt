@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
+import es.santirivera.domain.exception.EmptyListException
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.FragmentItemListBinding
@@ -42,13 +43,19 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
         characterListViewModel.characterList.observe(viewLifecycleOwner) {
             adapter.addAll(it)
         }
-        characterListViewModel.error.observe(viewLifecycleOwner) {
+        characterListViewModel.exception.observe(viewLifecycleOwner) {
             when (it) {
                 is UnknownHostException -> Toast.makeText(
                     requireContext(),
                     R.string.unknown_host,
                     Toast.LENGTH_SHORT
                 ).show()
+                is EmptyListException -> Toast.makeText(
+                    requireContext(),
+                    R.string.empty_list,
+                    Toast.LENGTH_SHORT
+                ).show()
+                else -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
     }
