@@ -32,3 +32,8 @@ The used methods are:
 - [OkHttp](https://square.github.io/okhttp/) (Manipulation of Retrofit queries)
 - [Hilt](https://dagger.dev/hilt/) (Dependency Injection)
 - [Glide](https://github.com/bumptech/glide) (Image loading tool)
+
+## Screenshots
+- List
+  ![List](/screenshots/list.jpg)
+  ![Detail](/screenshots/detail.jpg)
