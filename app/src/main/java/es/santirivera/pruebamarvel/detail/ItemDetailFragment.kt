@@ -1,6 +1,7 @@
 package es.santirivera.pruebamarvel.detail
 
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import androidx.fragment.app.Fragment
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import android.view.LayoutInflater
@@ -8,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.text.bold
 import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import es.santirivera.domain.model.MarvelCharacter
@@ -45,20 +47,21 @@ class ItemDetailFragment : Fragment() {
         }
     }
 
-    private fun generateDescription(item: MarvelCharacter): CharSequence? {
-        val builder = StringBuilder()
+    private fun generateDescription(item: MarvelCharacter): CharSequence {
+        val builder = SpannableStringBuilder()
         if (item.description.isNotEmpty()) {
+            builder.bold { append("Character description:\n\n") }
             builder.append(item.description)
             builder.append("\n\n")
         }
-        if (item.comicList.isNotEmpty()){
-            builder.append("Appears in:\n")
-            for (comic in item.comicList){
+        if (item.comicList.isNotEmpty()) {
+            builder.bold { append("Appears in:\n") }
+            for (comic in item.comicList) {
                 builder.append("\n")
                 builder.append(comic)
             }
         }
-        return builder.toString()
+        return builder
     }
 
     override fun onDestroyView() {
