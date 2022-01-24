@@ -6,6 +6,8 @@ import es.santirivera.data.api.model.ResponseCharacter
 import es.santirivera.domain.exception.EmptyListException
 import es.santirivera.domain.model.MarvelCharacter
 import java.lang.RuntimeException
+import java.util.*
+import kotlin.collections.ArrayList
 
 class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : CharacterRepository {
 
@@ -36,6 +38,17 @@ class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : Charac
     }
 
     private fun ResponseCharacter.toMarvelCharacter(): MarvelCharacter {
-        return MarvelCharacter(id,name, description, "${thumbnail?.path}.${thumbnail?.extension}")
+        val comicList = ArrayList<String>()
+        for (comic in comics.items){
+            comicList.add(comic.name)
+        }
+        for (comic in series.items){
+            comicList.add(comic.name)
+        }
+        for (comic in stories.items){
+            comicList.add(comic.name)
+        }
+        comicList.sort()
+        return MarvelCharacter(id,name, description, "${thumbnail?.path}.${thumbnail?.extension}", comicList)
     }
 }

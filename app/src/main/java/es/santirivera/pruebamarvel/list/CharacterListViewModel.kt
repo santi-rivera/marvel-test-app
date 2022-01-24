@@ -21,7 +21,7 @@ class CharacterListViewModel @Inject constructor(private val getCharactersUseCas
     private val _error = MutableLiveData<Exception>()
     val exception: LiveData<Exception> get() = _error
 
-    private var limit: Int = 10
+    private var limit: Int = 30
 
     init {
         requestCharacters(1)

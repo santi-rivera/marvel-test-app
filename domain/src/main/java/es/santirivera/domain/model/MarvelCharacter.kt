@@ -8,7 +8,8 @@ data class MarvelCharacter(
     val id: String,
     val name: String,
     val description: String,
-    val image: String
+    val image: String,
+    val comicList: ArrayList<String>
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {

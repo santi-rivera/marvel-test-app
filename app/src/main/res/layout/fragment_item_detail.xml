@@ -31,6 +31,14 @@
             android:textSize="32sp"
             android:id="@+id/textViewCharacterName"/>
 
+        <View
+            android:layout_width="0dp"
+            android:layout_height="2dp" app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:background="@color/marvel_orange"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/textViewCharacterName" />
+
         <TextView
             android:id="@+id/textViewCharacterDescription"
             android:layout_width="match_parent"

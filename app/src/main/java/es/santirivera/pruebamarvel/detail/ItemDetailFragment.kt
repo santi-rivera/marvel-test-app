@@ -35,14 +35,30 @@ class ItemDetailFragment : Fragment() {
 
     private fun updateContent() {
         item?.let {
-            binding.textViewCharacterName?.text = it.name
-            binding.textViewCharacterDescription?.text = it.description
-            binding.imageViewCharacter?.let { it1 ->
+            binding.textViewCharacterName.text = it.name
+            binding.textViewCharacterDescription.text = generateDescription(item!!)
+            binding.imageViewCharacter.let { it1 ->
                 Glide.with(requireContext())
                     .load(it.image)
                     .into(it1)
             }
         }
+    }
+
+    private fun generateDescription(item: MarvelCharacter): CharSequence? {
+        val builder = StringBuilder()
+        if (item.description.isNotEmpty()) {
+            builder.append(item.description)
+            builder.append("\n\n")
+        }
+        if (item.comicList.isNotEmpty()){
+            builder.append("Appears in:\n")
+            for (comic in item.comicList){
+                builder.append("\n")
+                builder.append(comic)
+            }
+        }
+        return builder.toString()
     }
 
     override fun onDestroyView() {
