@@ -35,5 +35,10 @@ The used methods are:
 
 ## Screenshots
 - List
-  ![List](/screenshots/list.jpg)
-  ![Detail](/screenshots/detail.jpg)
+
+![List](/screenshots/list.jpg)
+  
+
+- Detail
+
+![Detail](/screenshots/detail.jpg)
