@@ -14,6 +14,9 @@ import com.bumptech.glide.Glide
 import dagger.hilt.android.AndroidEntryPoint
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.databinding.FragmentItemDetailBinding
+import android.content.Intent
+import android.net.Uri
+
 
 @AndroidEntryPoint
 class ItemDetailFragment : Fragment() {
@@ -39,11 +42,14 @@ class ItemDetailFragment : Fragment() {
         item?.let {
             binding.textViewCharacterName.text = it.name
             binding.textViewCharacterDescription.text = generateDescription(item!!)
-            binding.imageViewCharacter.let { it1 ->
-                Glide.with(requireContext())
-                    .load(it.image)
-                    .into(it1)
-            }
+            Glide.with(requireContext()).load(it.image).into(binding.imageViewCharacter)
+            val wikiUrl = it.wikiUrl
+            if (wikiUrl.isNotEmpty())
+                binding.imageViewCharacter.setOnClickListener {
+                    val i = Intent(Intent.ACTION_VIEW)
+                    i.data = Uri.parse(wikiUrl)
+                    startActivity(i)
+                }
         }
     }
 

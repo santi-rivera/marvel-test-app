@@ -49,6 +49,12 @@ class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : Charac
             comicList.add(comic.name)
         }
         comicList.sort()
-        return MarvelCharacter(id,name, description, "${thumbnail?.path}.${thumbnail?.extension}", comicList)
+        var wikiUrl = ""
+        for (url in urls){
+            if (url.type == "wiki"){
+                wikiUrl = url.url
+            }
+        }
+        return MarvelCharacter(id,name, description, "${thumbnail?.path}.${thumbnail?.extension}", wikiUrl, comicList)
     }
 }
