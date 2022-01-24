@@ -10,8 +10,10 @@ The app loads the list of all Marvel Characters from the Marvel API and displays
 
 MVVM (Model View ViewModel). It also uses SOLID principles.
 
-The app is divided in three parts (app, domain and data).
+The app is divided in three layer (app, domain and data).
 
+| Layer | Description |
+| --- | --- |
 | Data | Handles the API calls and the raw API data |
 | Domain | Receives requests from App and turns the raw API data into usable models |
 | App | The app itself. It asks Domain for data and displays it, as well as handling user interaction |
