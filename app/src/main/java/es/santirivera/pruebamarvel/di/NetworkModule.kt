@@ -24,7 +24,7 @@ class NetworkModule {
         var request = chain.request()
         val builder = request.url.newBuilder()
         builder.addQueryParameter("apikey", Keys.PUBLIC_KEY)
-            .addQueryParameter("hash", Hash.generate(timeStamp, Keys.PUBLIC_KEY, Keys.PRIVATE_KEY))
+            .addQueryParameter("hash", Hash.generate(timeStamp, Keys.PRIVATE_KEY, Keys.PUBLIC_KEY))
             .addQueryParameter("ts", timeStamp.toString())
         request = request.newBuilder().url(builder.build()).build()
         return chain.proceed(request)
