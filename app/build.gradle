@@ -25,6 +25,17 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "version"
+    productFlavors {
+        marvel {
+            dimension "version"
+            applicationIdSuffix ".full"
+            versionNameSuffix "-full"
+            buildConfigField "String", "BASE_URL", "\"https://gateway.marvel.com/\""
+            buildConfigField "String", "PUBLIC_KEY", "\"70727995a318873b4d47ac68038ba995\""
+            buildConfigField "String", "PRIVATE_KEY", "\"a652c19b3552cdf872b9660e6e2d39a7ea0fe072\""
+        }
+    }
     packagingOptions {
         exclude 'META-INF/proguard/androidx-annotations.pro'
         exclude 'META-INF/gradle/incremental.annotation.processors'
