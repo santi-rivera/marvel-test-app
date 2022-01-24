@@ -4,4 +4,7 @@
     <string name="empty_list">Empty server response. You\'ve probably reached the end of the list.</string>
     <string name="api_key_error">There\'s a problem with the API Keys.</string>
     <string name="api_params_error">API received an illegal parameter</string>
+    <string name="character_description">Character description:</string>
+    <string name="appears_in">Appears in:</string>
+    <string name="loading">Loading...</string>
 </resources>

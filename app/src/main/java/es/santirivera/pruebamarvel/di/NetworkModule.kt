@@ -6,7 +6,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import es.santirivera.data.api.MarvelApi
 import es.santirivera.data.api.hash.Hash
-import es.santirivera.pruebamarvel.Keys
+import es.santirivera.pruebamarvel.BuildConfig
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
@@ -23,8 +23,11 @@ class NetworkModule {
         val timeStamp = System.currentTimeMillis() / 1000
         var request = chain.request()
         val builder = request.url.newBuilder()
-        builder.addQueryParameter("apikey", Keys.PUBLIC_KEY)
-            .addQueryParameter("hash", Hash.generate(timeStamp, Keys.PRIVATE_KEY, Keys.PUBLIC_KEY))
+        builder.addQueryParameter("apikey", BuildConfig.PUBLIC_KEY)
+            .addQueryParameter(
+                "hash",
+                Hash.generate(timeStamp, BuildConfig.PRIVATE_KEY, BuildConfig.PUBLIC_KEY)
+            )
             .addQueryParameter("ts", timeStamp.toString())
         request = request.newBuilder().url(builder.build()).build()
         return chain.proceed(request)

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">@color/marvel_blue</color>
+    <color name="colorPrimaryVariant">@color/marvel_purple</color>
+    <color name="colorSecondary">@color/marvel_red</color>
+    <color name="colorSecondaryVariant">@color/marvel_orange</color>
+
+</resources>

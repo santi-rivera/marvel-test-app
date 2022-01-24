@@ -16,7 +16,6 @@ data class ComicList(
     val items: ArrayList<ComicResponse>
 )
 
-
 data class ComicResponse(
     val name: String
 )

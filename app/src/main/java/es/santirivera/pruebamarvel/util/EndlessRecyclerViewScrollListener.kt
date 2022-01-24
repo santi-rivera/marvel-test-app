@@ -3,11 +3,15 @@ package es.santirivera.pruebamarvel.util
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutManager, private var visibleThreshold: Int) :
+abstract class EndlessRecyclerViewScrollListener(
+    layoutManager: LinearLayoutManager,
+    private var visibleThreshold: Int
+) :
     RecyclerView.OnScrollListener() {
     private var currentPage = 0
     private var previousTotalItemCount = 0
     private var loading = true
+
 
     // Sets the starting page index
     private val startingPageIndex = 0
@@ -39,6 +43,9 @@ abstract class EndlessRecyclerViewScrollListener(layoutManager: LinearLayoutMana
         }
     }
 
+    fun loadFailed() {
+        loading = false
+    }
 
     abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?)
 }

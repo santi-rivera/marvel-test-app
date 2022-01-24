@@ -8,7 +8,6 @@ import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.domain.usecase.Callback
 import es.santirivera.domain.usecase.list.GetCharacterListInput
 import es.santirivera.domain.usecase.list.GetCharacterListUseCase
-import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel

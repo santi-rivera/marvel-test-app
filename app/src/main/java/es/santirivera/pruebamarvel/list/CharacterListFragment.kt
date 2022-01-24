@@ -4,23 +4,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
-import es.santirivera.domain.exception.EmptyListException
 import es.santirivera.domain.model.MarvelCharacter
-import es.santirivera.pruebamarvel.R
+import es.santirivera.pruebamarvel.MarvelFragment
 import es.santirivera.pruebamarvel.databinding.FragmentItemListBinding
 import es.santirivera.pruebamarvel.util.EndlessRecyclerViewScrollListener
-import retrofit2.HttpException
-import java.net.UnknownHostException
 
 @AndroidEntryPoint
-class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterClickedCallback {
+class CharacterListFragment : MarvelFragment(),
+    MarvelCharacterViewHolder.OnCharacterClickedCallback {
 
     private var _binding: FragmentItemListBinding? = null
     private val binding get() = _binding!!
@@ -28,6 +24,8 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
     private val characterListViewModel: CharacterListViewModel by viewModels()
 
     private val adapter = MarvelCharacterAdapter(ArrayList<MarvelCharacter>(), this)
+
+    private lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,36 +40,34 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
         val recyclerView: RecyclerView = binding.itemList
         setupRecyclerView(recyclerView)
         characterListViewModel.characterList.observe(viewLifecycleOwner) {
+            endLoad()
             adapter.addAll(it)
         }
         characterListViewModel.exception.observe(viewLifecycleOwner) {
-            val message = when (it) {
-                is UnknownHostException -> getString(R.string.unknown_host)
-                is EmptyListException -> getString(R.string.empty_list)
-                is HttpException -> {
-                    when (it.code()) {
-                        401 -> getString(R.string.api_key_error)
-                        409 -> getString(R.string.api_params_error)
-                        else -> it.message()
-                    }
-                }
-                else -> it.message
+            val retry = handleErrors(it)
+            scrollListener.loadFailed()
+            if (retry) {
+                characterListViewModel.requestCharacters(adapter.itemCount + 1)
             }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
+        startLoad()
     }
 
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter
         binding.itemList.apply {
-            val endlessScrollListener = object :
-                EndlessRecyclerViewScrollListener(binding.itemList.layoutManager as LinearLayoutManager, 10) {
+            scrollListener = object :
+                EndlessRecyclerViewScrollListener(
+                    binding.itemList.layoutManager as LinearLayoutManager,
+                    10
+                ) {
                 override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                     characterListViewModel.requestCharacters(totalItemsCount)
+                    startLoad()
                 }
             }
-            addOnScrollListener(endlessScrollListener)
+            addOnScrollListener(scrollListener)
         }
     }
 

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="marvel_red">#e23636</color>
-    <color name="marvel_grey">#504a4a</color>
-    <color name="marvel_blue">#518cca</color>
-    <color name="marvel_orange">#f78f3f</color>
-    <color name="marvel_grey_transparent">#cc504a4a</color>
+    <color name="marvel_red">#FFBD1000</color> <!-- This is from Iron Man's armor -->
+    <color name="marvel_orange">#FFF79914</color> <!-- This is also from Iron Man's armor -->
+    <color name="marvel_purple">#FF744A5D</color> <!-- This is from Hawkeye's costume -->
+    <color name="marvel_blue">#FFCBE9FC</color> <!-- This is from Captain America's costume -->
+    <color name="marvel_grey_transparent">#ee444444</color>
+    <color name="transparent_white">#eeffffff</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
