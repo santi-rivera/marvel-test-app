@@ -3,4 +3,5 @@
     <string name="unknown_host">Unknown host. Your are probably not connected to the internet.</string>
     <string name="empty_list">Empty server response. You\'ve probably reached the end of the list.</string>
     <string name="api_key_error">There\'s a problem with the API Keys.</string>
+    <string name="api_params_error">API received an illegal parameter</string>
 </resources>

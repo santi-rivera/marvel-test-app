@@ -45,25 +45,19 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
             adapter.addAll(it)
         }
         characterListViewModel.exception.observe(viewLifecycleOwner) {
-            when (it) {
-                is UnknownHostException -> Toast.makeText(
-                    requireContext(),
-                    R.string.unknown_host,
-                    Toast.LENGTH_SHORT
-                ).show()
-                is EmptyListException -> Toast.makeText(
-                    requireContext(),
-                    R.string.empty_list,
-                    Toast.LENGTH_SHORT
-                ).show()
-                is HttpException ->{
-                    val code = it.code()
-                    if (code == 401){
-                        Toast.makeText(requireContext(), R.string.api_key_error, Toast.LENGTH_SHORT).show()
+            val message = when (it) {
+                is UnknownHostException -> getString(R.string.unknown_host)
+                is EmptyListException -> getString(R.string.empty_list)
+                is HttpException -> {
+                    when (it.code()) {
+                        401 -> getString(R.string.api_key_error)
+                        409 -> getString(R.string.api_params_error)
+                        else -> it.message()
                     }
                 }
-                else -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                else -> it.message
             }
+            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
         }
     }
 
