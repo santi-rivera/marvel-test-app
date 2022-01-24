@@ -21,28 +21,30 @@ class NetworkModule {
     private val privateKey = "a652c19b3552cdf872b9660e6e2d39a7ea0fe072"
 
     private fun addHashAndPublicKey(chain: Interceptor.Chain): okhttp3.Response {
-        val timeStamp = System.currentTimeMillis()/1000
+        val timeStamp = System.currentTimeMillis() / 1000
         var request = chain.request()
         val builder = request.url.newBuilder()
-        builder.addQueryParameter("apikey", publicKey).addQueryParameter("hash", Hash.generate(timeStamp, privateKey, publicKey)).addQueryParameter("ts", timeStamp.toString())
+        builder.addQueryParameter("apikey", publicKey)
+            .addQueryParameter("hash", Hash.generate(timeStamp, privateKey, publicKey))
+            .addQueryParameter("ts", timeStamp.toString())
         request = request.newBuilder().url(builder.build()).build()
         return chain.proceed(request)
     }
 
     @Provides
     @Singleton
-    fun providesOkHttpClient() : OkHttpClient=OkHttpClient.Builder().addInterceptor { interceptorChain -> addHashAndPublicKey(interceptorChain) }.build()
+    fun providesOkHttpClient(): OkHttpClient = OkHttpClient.Builder()
+        .addInterceptor { interceptorChain -> addHashAndPublicKey(interceptorChain) }.build()
 
     @Provides
     @Singleton
-    fun providesRetrofit(okHttpClient: OkHttpClient ): Retrofit = Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).client(okHttpClient).build()
+    fun providesRetrofit(okHttpClient: OkHttpClient): Retrofit =
+        Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create())
+            .client(okHttpClient).build()
 
     @Provides
     @Singleton
-    fun providesApi(retrofit: Retrofit) : MarvelApi = retrofit.create(MarvelApi::class.java)
-
-
-
+    fun providesApi(retrofit: Retrofit): MarvelApi = retrofit.create(MarvelApi::class.java)
 
 
 }

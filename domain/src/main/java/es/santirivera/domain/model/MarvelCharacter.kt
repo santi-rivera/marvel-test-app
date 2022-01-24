@@ -5,8 +5,16 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class MarvelCharacter(
-    val id : String,
-    val name : String,
-    val description : String,
-    val image : String
-)  : Parcelable
+    val id: String,
+    val name: String,
+    val description: String,
+    val image: String
+) : Parcelable {
+
+    override fun equals(other: Any?): Boolean {
+        if (other is MarvelCharacter) {
+            return other.id == id
+        }
+        return false
+    }
+}

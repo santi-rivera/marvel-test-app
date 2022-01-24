@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">Prueba Marvel</string>
-    <string name="title_item_detail">Item Detail</string>
+    <string name="unknown_host">Unknown host. Your are probably not connected to the internet.</string>
 </resources>

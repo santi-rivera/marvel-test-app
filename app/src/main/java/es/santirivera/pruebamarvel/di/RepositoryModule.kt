@@ -15,6 +15,7 @@ class RepositoryModule {
 
     @Provides
     @Singleton
-    fun providesCharacterRepository(dataSource:MarvelDataSource) : CharacterRepository = CharacterRepositoryImpl(dataSource)
+    fun providesCharacterRepository(dataSource: MarvelDataSource): CharacterRepository =
+        CharacterRepositoryImpl(dataSource)
 
 }

@@ -13,9 +13,11 @@ import es.santirivera.domain.usecase.list.GetCharacterListUseCase
 class UseCaseModule {
 
     @Provides
-    fun providesGetCharacterByIdUseCase(characterRepository: CharacterRepository): GetCharacterDetailByIdUseCase = GetCharacterDetailByIdUseCase(characterRepository)
+    fun providesGetCharacterByIdUseCase(characterRepository: CharacterRepository): GetCharacterDetailByIdUseCase =
+        GetCharacterDetailByIdUseCase(characterRepository)
 
     @Provides
-    fun providesGetCharacterListUseCase(characterRepository : CharacterRepository) : GetCharacterListUseCase = GetCharacterListUseCase(characterRepository)
+    fun providesGetCharacterListUseCase(characterRepository: CharacterRepository): GetCharacterListUseCase =
+        GetCharacterListUseCase(characterRepository)
 
 }

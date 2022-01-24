@@ -7,10 +7,10 @@ import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.databinding.ItemListContentBinding
 
 class MarvelCharacterViewHolder(private val binding: ItemListContentBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    RecyclerView.ViewHolder(binding.root) {
 
-    interface OnCharacterClickedCallback{
-        fun onCharacterClicked(item:MarvelCharacter)
+    interface OnCharacterClickedCallback {
+        fun onCharacterClicked(item: MarvelCharacter)
     }
 
 

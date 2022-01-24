@@ -12,14 +12,20 @@ import java.lang.Exception
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterListViewModel @Inject constructor(private val getCharactersUseCase: GetCharacterListUseCase) : ViewModel(), Callback<List<MarvelCharacter>> {
+class CharacterListViewModel @Inject constructor(private val getCharactersUseCase: GetCharacterListUseCase) :
+    ViewModel(), Callback<List<MarvelCharacter>> {
 
     private val _characterList = MutableLiveData<List<MarvelCharacter>>()
-    val characterList : LiveData<List<MarvelCharacter>> get() = _characterList
+    val characterList: LiveData<List<MarvelCharacter>> get() = _characterList
+
+    private val _error = MutableLiveData<Exception>()
+    val error: LiveData<Exception> get() = _error
 
     private var limit: Int = 10
 
-    init { requestCharacters(1) }
+    init {
+        requestCharacters(1)
+    }
 
     fun requestCharacters(offset: Int) {
         getCharactersUseCase.execute(GetCharacterListInput(limit, offset), this)
@@ -29,8 +35,8 @@ class CharacterListViewModel @Inject constructor(private val getCharactersUseCas
         _characterList.value = response
     }
 
-    override fun onError(error: Exception) {
-        TODO("Not yet implemented")
+    override fun onError(exception: Exception) {
+        _error.value = exception
     }
 
 }

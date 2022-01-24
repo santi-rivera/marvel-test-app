@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -11,8 +12,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import es.santirivera.domain.model.MarvelCharacter
+import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.FragmentItemListBinding
 import es.santirivera.pruebamarvel.util.EndlessRecyclerViewScrollListener
+import java.net.UnknownHostException
 
 @AndroidEntryPoint
 class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterClickedCallback {
@@ -39,7 +42,17 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
         characterListViewModel.characterList.observe(viewLifecycleOwner) {
             adapter.addAll(it)
         }
+        characterListViewModel.error.observe(viewLifecycleOwner) {
+            when (it) {
+                is UnknownHostException -> Toast.makeText(
+                    requireContext(),
+                    R.string.unknown_host,
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
+
 
     private fun setupRecyclerView(recyclerView: RecyclerView) {
         recyclerView.adapter = adapter

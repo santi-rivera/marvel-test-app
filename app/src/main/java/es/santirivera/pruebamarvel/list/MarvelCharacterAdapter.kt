@@ -7,24 +7,29 @@ import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.databinding.ItemListContentBinding
 
 class MarvelCharacterAdapter(
-    private val values: ArrayList<MarvelCharacter>, private val callback: MarvelCharacterViewHolder.OnCharacterClickedCallback) :
-        RecyclerView.Adapter<MarvelCharacterViewHolder>(){
+    private val values: ArrayList<MarvelCharacter>,
+    private val callback: MarvelCharacterViewHolder.OnCharacterClickedCallback
+) :
+    RecyclerView.Adapter<MarvelCharacterViewHolder>() {
 
-        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarvelCharacterViewHolder {
-            val binding =
-                ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-            return MarvelCharacterViewHolder(binding)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MarvelCharacterViewHolder {
+        val binding =
+            ItemListContentBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return MarvelCharacterViewHolder(binding)
+    }
 
-        override fun onBindViewHolder(holder: MarvelCharacterViewHolder, position: Int) {
-            val item = values[position]
-            holder.setElement(item, callback)
-        }
+    override fun onBindViewHolder(holder: MarvelCharacterViewHolder, position: Int) {
+        val item = values[position]
+        holder.setElement(item, callback)
+    }
 
-        override fun getItemCount() = values.size
+    override fun getItemCount() = values.size
 
     fun addAll(it: List<MarvelCharacter>) {
-        values.addAll(it)
+        for (character in it){
+            if (!values.contains(character))
+                values.add(character)
+        }
         notifyDataSetChanged()
     }
 
