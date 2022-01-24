@@ -16,6 +16,7 @@ import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.FragmentItemListBinding
 import es.santirivera.pruebamarvel.util.EndlessRecyclerViewScrollListener
+import retrofit2.HttpException
 import java.net.UnknownHostException
 
 @AndroidEntryPoint
@@ -55,6 +56,12 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
                     R.string.empty_list,
                     Toast.LENGTH_SHORT
                 ).show()
+                is HttpException ->{
+                    val code = it.code()
+                    if (code == 401){
+                        Toast.makeText(requireContext(), R.string.api_key_error, Toast.LENGTH_SHORT).show()
+                    }
+                }
                 else -> Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
             }
         }
