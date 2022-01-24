@@ -66,7 +66,7 @@ class CharacterListFragment : Fragment(), MarvelCharacterViewHolder.OnCharacterC
         recyclerView.adapter = adapter
         binding.itemList.apply {
             val endlessScrollListener = object :
-                EndlessRecyclerViewScrollListener(binding.itemList.layoutManager as LinearLayoutManager) {
+                EndlessRecyclerViewScrollListener(binding.itemList.layoutManager as LinearLayoutManager, 10) {
                 override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
                     characterListViewModel.requestCharacters(totalItemsCount)
                 }
