@@ -54,10 +54,7 @@ The app uses two different flavors, Blue and Red, that change the UI of the app 
 
 ## Screenshots
 
-- List
-
 ![List](/screenshots/list.jpg)
-
-- Detail
-
 ![Detail](/screenshots/detail.jpg)
+
+
