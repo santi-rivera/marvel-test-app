@@ -9,8 +9,7 @@ data class MarvelCharacter(
     val name: String,
     val description: String,
     val image: String,
-    val wikiUrl: String = "",
-    val comicList: ArrayList<String>
+    val wikiUrl: String = ""
 ) : Parcelable {
 
     override fun equals(other: Any?): Boolean {

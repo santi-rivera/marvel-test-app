@@ -37,6 +37,7 @@ android {
             versionNameSuffix "-red"
             buildConfigField "String", "PUBLIC_KEY", '"70727995a318873b4d47ac68038ba995"'
             buildConfigField "String", "PRIVATE_KEY", '"a652c19b3552cdf872b9660e6e2d39a7ea0fe072"'
+            buildConfigField "String", "DATABASE_NAME", '"dbred"'
         }
         blue {
             dimension "colors"
@@ -44,6 +45,7 @@ android {
             versionNameSuffix "-blue"
             buildConfigField "String", "PUBLIC_KEY", '"70727995a318873b4d47ac68038ba995"'
             buildConfigField "String", "PRIVATE_KEY", '"a652c19b3552cdf872b9660e6e2d39a7ea0fe072"'
+            buildConfigField "String", "DATABASE_NAME", '"dbblue"'
         }
     }
     packagingOptions {
@@ -87,6 +89,7 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp'
 
     implementation "com.google.dagger:hilt-android:2.40.2"
+    implementation 'androidx.room:room-ktx:2.4.1'
     kapt "com.google.dagger:hilt-android-compiler:2.40.2"
 
     implementation "com.github.bumptech.glide:glide:4.12.0"

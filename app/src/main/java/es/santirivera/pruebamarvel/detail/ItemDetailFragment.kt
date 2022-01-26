@@ -59,14 +59,6 @@ class ItemDetailFragment : MarvelFragment() {
             builder.append(item.description)
             builder.append("\n\n")
         }
-        if (item.comicList.isNotEmpty()) {
-            builder.bold { append(getString(R.string.appears_in)) }
-            builder.append("\n")
-            for (comic in item.comicList) {
-                builder.append("\n")
-                builder.append(comic)
-            }
-        }
         return builder
     }
 

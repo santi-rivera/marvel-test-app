@@ -25,14 +25,10 @@ class MarvelCharacterAdapter(
 
     override fun getItemCount() = values.size
 
-    fun addAll(it: List<MarvelCharacter>) {
-        val count = itemCount
-        for (character in it) {
-            if (!values.contains(character))
-                values.add(character)
-        }
-        val newCount = itemCount
-        notifyItemRangeInserted(count, newCount)
+    fun setNewValues(it: List<MarvelCharacter>) {
+        values.clear()
+        values.addAll(it)
+        notifyDataSetChanged()
     }
 
 }

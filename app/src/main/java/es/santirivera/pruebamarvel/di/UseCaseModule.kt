@@ -5,6 +5,8 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import es.santirivera.domain.repo.CharacterRepository
+import es.santirivera.domain.usecase.db.ClearDatabaseUseCase
+import es.santirivera.domain.usecase.db.ClearDatabaseUseCaseImpl
 import es.santirivera.domain.usecase.detail.GetCharacterDetailByIdUseCase
 import es.santirivera.domain.usecase.detail.GetCharacterDetailByIdUseCaseImpl
 import es.santirivera.domain.usecase.list.GetCharacterListUseCase
@@ -22,4 +24,7 @@ class UseCaseModule {
     fun providesGetCharacterListUseCase(characterRepository: CharacterRepository): GetCharacterListUseCase =
         GetCharacterListUseCaseImpl(characterRepository)
 
+    @Provides
+    fun providesClearDatabaseUseCase(characterRepository: CharacterRepository): ClearDatabaseUseCase =
+        ClearDatabaseUseCaseImpl(characterRepository)
 }

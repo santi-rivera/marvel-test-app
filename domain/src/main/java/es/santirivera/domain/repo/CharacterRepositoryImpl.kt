@@ -2,27 +2,38 @@ package es.santirivera.domain.repo
 
 
 import es.santirivera.data.api.MarvelDataSource
-import es.santirivera.data.api.model.ResponseCharacter
+import es.santirivera.data.api.room.MarvelCharacterDao
 import es.santirivera.domain.exception.EmptyListException
 import es.santirivera.domain.model.MarvelCharacter
-import java.lang.RuntimeException
-import java.util.*
-import kotlin.collections.ArrayList
+import es.santirivera.domain.model.toDatabaseCharacter
+import es.santirivera.domain.model.toMarvelCharacter
 
-class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : CharacterRepository {
 
-    override suspend fun getCharactersList(limit: Int, offset: Int): List<MarvelCharacter> {
+class CharacterRepositoryImpl(
+    private val dataSource: MarvelDataSource,
+    private val characterDao: MarvelCharacterDao
+) : CharacterRepository {
+
+    override suspend fun getCharactersList(limit: Int): List<MarvelCharacter> {
         return try {
-            val list = dataSource.getCharacterList(limit, offset)
-            if (list.data.results.isEmpty()){
-                throw EmptyListException()
-            } else {
-                val sanitizedList = ArrayList<MarvelCharacter>()
-                for (character in list.data.results){
-                    sanitizedList.add(character.toMarvelCharacter())
-                }
-                return sanitizedList
+            val totalList = ArrayList<MarvelCharacter>()
+            val localList = characterDao.getAll().map {
+                it.toMarvelCharacter()
             }
+            val list = dataSource.getCharacterList(limit, localList.size + 1)
+            if (list.data.results.isEmpty()) {
+                throw EmptyListException()
+            }
+            val sanitizedList = list.data.results.map {
+                it.toMarvelCharacter()
+            }
+            val localSanitizedList = list.data.results.map {
+                it.toDatabaseCharacter()
+            }
+            characterDao.insertAll(localSanitizedList)
+            totalList.addAll(localList)
+            totalList.addAll(sanitizedList)
+            return totalList
         } catch (exception: Exception) {
             throw exception
         }
@@ -37,24 +48,13 @@ class CharacterRepositoryImpl(private val dataSource: MarvelDataSource) : Charac
         }
     }
 
-    private fun ResponseCharacter.toMarvelCharacter(): MarvelCharacter {
-        val comicList = ArrayList<String>()
-        for (comic in comics.items){
-            comicList.add(comic.name)
+    override suspend fun clearDatabase(): Boolean {
+        return try {
+            characterDao.clearTable()
+            true
+        } catch (exception: Exception) {
+            throw exception
         }
-        for (comic in series.items){
-            comicList.add(comic.name)
-        }
-        for (comic in stories.items){
-            comicList.add(comic.name)
-        }
-        comicList.sort()
-        var wikiUrl = ""
-        for (url in urls){
-            if (url.type == "wiki"){
-                wikiUrl = url.url
-            }
-        }
-        return MarvelCharacter(id,name, description, "${thumbnail?.path}.${thumbnail?.extension}", wikiUrl, comicList)
     }
+
 }

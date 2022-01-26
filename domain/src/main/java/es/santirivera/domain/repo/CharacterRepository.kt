@@ -5,8 +5,10 @@ import es.santirivera.domain.model.MarvelCharacter
 
 interface CharacterRepository {
 
-    suspend fun getCharactersList(limit : Int, offset : Int) : List<MarvelCharacter>
+    suspend fun getCharactersList(limit : Int) : List<MarvelCharacter>
 
     suspend fun getCharacterById(id : String) : MarvelCharacter
+
+    suspend fun clearDatabase(): Boolean
 
 }

@@ -41,7 +41,7 @@ class CharacterListFragment : MarvelFragment(),
         setupRecyclerView(recyclerView)
         characterListViewModel.characterList.observe(viewLifecycleOwner) {
             endLoad()
-            adapter.addAll(it)
+            adapter.setNewValues(it)
         }
         characterListViewModel.exception.observe(viewLifecycleOwner) {
             val retry = handleErrors(it)
