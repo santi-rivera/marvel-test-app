@@ -25,6 +25,8 @@ class CharacterListFragment : MarvelFragment(),
 
     private val adapter = MarvelCharacterAdapter(ArrayList<MarvelCharacter>(), this)
 
+    private var lastState = CharacterListState()
+
     private lateinit var scrollListener: EndlessRecyclerViewScrollListener
 
     override fun onCreateView(
@@ -39,15 +41,19 @@ class CharacterListFragment : MarvelFragment(),
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = binding.itemList
         setupRecyclerView(recyclerView)
-        characterListViewModel.characterList.observe(viewLifecycleOwner) {
-            endLoad()
-            adapter.setNewValues(it)
-        }
-        characterListViewModel.exception.observe(viewLifecycleOwner) {
-            val retry = handleErrors(it)
-            scrollListener.loadFailed()
-            if (retry) {
-                characterListViewModel.requestCharacters(adapter.itemCount + 1)
+        characterListViewModel.state.observe(viewLifecycleOwner) {
+            if (it != lastState) {
+                if (it.list != null) {
+                    endLoad()
+                    adapter.setNewValues(it.list!!)
+                } else if (it.error != null) {
+                    val retry = handleErrors(it.error!!)
+                    scrollListener.loadFailed()
+                    if (retry) {
+                        characterListViewModel.requestCharacters(adapter.itemCount + 1)
+                    }
+                }
+                lastState = it
             }
         }
         startLoad()

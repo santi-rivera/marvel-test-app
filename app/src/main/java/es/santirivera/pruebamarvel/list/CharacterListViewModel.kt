@@ -11,24 +11,25 @@ import es.santirivera.domain.usecase.list.GetCharacterListUseCase
 import javax.inject.Inject
 
 @HiltViewModel
-class CharacterListViewModel @Inject constructor(private val getCharactersUseCase: GetCharacterListUseCase, clearDatabaseUseCase: ClearDatabaseUseCase) :
-    ViewModel(), Callback<List<MarvelCharacter>>{
+class CharacterListViewModel @Inject constructor(
+    private val getCharactersUseCase: GetCharacterListUseCase,
+    clearDatabaseUseCase: ClearDatabaseUseCase
+) :
+    ViewModel(), Callback<List<MarvelCharacter>> {
 
-    private val _characterList = MutableLiveData<List<MarvelCharacter>>()
-    val characterList: LiveData<List<MarvelCharacter>> get() = _characterList
-
-    private val _error = MutableLiveData<Exception>()
-    val exception: LiveData<Exception> get() = _error
+    private val _state = MutableLiveData<CharacterListState>()
+    val state: LiveData<CharacterListState> get() = _state
 
     init {
-        clearDatabaseUseCase.execute(null, object:Callback<Boolean>{
+        clearDatabaseUseCase.execute(null, object : Callback<Boolean> {
             override fun onSuccess(response: Boolean) {
                 requestCharacters(1)
             }
 
             override fun onError(error: Exception) {
-                _error.value = error
+                reportError(error)
             }
+
         })
     }
 
@@ -37,11 +38,23 @@ class CharacterListViewModel @Inject constructor(private val getCharactersUseCas
     }
 
     override fun onSuccess(response: List<MarvelCharacter>) {
-        _characterList.value = response
+        reportResult(response)
     }
 
     override fun onError(error: Exception) {
-        _error.value = error
+        reportError(error)
+    }
+
+    private fun reportResult(response: List<MarvelCharacter>) {
+        val state = CharacterListState()
+        state.list = response
+        _state.value = state
+    }
+
+    private fun reportError(error: Exception) {
+        val state = CharacterListState()
+        state.error = error
+        _state.value = state
     }
 
 }
