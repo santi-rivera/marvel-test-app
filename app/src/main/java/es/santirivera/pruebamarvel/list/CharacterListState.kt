@@ -11,4 +11,5 @@ class CharacterListState {
         if (other is CharacterListState) return timeStamp == (other).timeStamp
         return false
     }
+
 }

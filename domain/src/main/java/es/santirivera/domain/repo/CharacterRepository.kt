@@ -7,8 +7,6 @@ interface CharacterRepository {
 
     suspend fun getCharactersList(limit : Int) : List<MarvelCharacter>
 
-    suspend fun getCharacterById(id : String) : MarvelCharacter
-
     suspend fun clearDatabase(): Boolean
 
 }

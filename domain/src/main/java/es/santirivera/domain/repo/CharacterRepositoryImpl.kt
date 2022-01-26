@@ -39,15 +39,6 @@ class CharacterRepositoryImpl(
         }
     }
 
-    override suspend fun getCharacterById(id: String): MarvelCharacter {
-        return try {
-            val response = dataSource.getCharacterById(id)
-            response.toMarvelCharacter()
-        } catch (exception: Exception) {
-            throw exception
-        }
-    }
-
     override suspend fun clearDatabase(): Boolean {
         return try {
             characterDao.clearTable()

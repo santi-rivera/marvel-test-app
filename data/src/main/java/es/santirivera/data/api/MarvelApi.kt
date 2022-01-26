@@ -14,9 +14,4 @@ interface MarvelApi {
         @Query("offset") offset: Int
     ): ResponseCharacterListContainer
 
-
-    @GET("/v1/public/characters/{id}")
-    suspend fun getCharacterById(@Path("id")id : String): ResponseCharacter
-
-
 }

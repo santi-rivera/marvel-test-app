@@ -21,6 +21,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "colors", "source"
+    productFlavors {
+        red {
+            dimension "colors"
+        }
+        blue {
+            dimension "colors"
+        }
+        network {
+            dimension "source"
+        }
+        mock {
+            dimension "source"
+        }
+    }
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8

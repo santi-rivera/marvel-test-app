@@ -57,7 +57,6 @@ class ItemDetailFragment : MarvelFragment() {
             builder.bold { append(getString(R.string.character_description)) }
             builder.append("\n\n")
             builder.append(item.description)
-            builder.append("\n\n")
         }
         return builder
     }

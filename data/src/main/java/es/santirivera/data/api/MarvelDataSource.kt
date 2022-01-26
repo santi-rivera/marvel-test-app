@@ -7,8 +7,4 @@ interface MarvelDataSource {
 
     @Throws(Exception::class)
     suspend fun getCharacterList(limit: Int, offset: Int) : ResponseCharacterListContainer
-
-    @Throws(Exception::class)
-    suspend fun getCharacterById(id : String): ResponseCharacter
-
 }

@@ -8,44 +8,40 @@ plugins {
 
 android {
     compileSdk 32
-
     defaultConfig {
         applicationId "es.santirivera.pruebamarvel"
         minSdk 23
         targetSdk 32
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
-        debug {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
-    flavorDimensions "colors"
+    flavorDimensions "colors", "source"
     productFlavors {
         red {
             dimension "colors"
-            applicationIdSuffix ".red"
-            versionNameSuffix "-red"
             buildConfigField "String", "PUBLIC_KEY", '"70727995a318873b4d47ac68038ba995"'
             buildConfigField "String", "PRIVATE_KEY", '"a652c19b3552cdf872b9660e6e2d39a7ea0fe072"'
             buildConfigField "String", "DATABASE_NAME", '"dbred"'
         }
         blue {
             dimension "colors"
-            applicationIdSuffix ".blue"
-            versionNameSuffix "-blue"
             buildConfigField "String", "PUBLIC_KEY", '"70727995a318873b4d47ac68038ba995"'
             buildConfigField "String", "PRIVATE_KEY", '"a652c19b3552cdf872b9660e6e2d39a7ea0fe072"'
             buildConfigField "String", "DATABASE_NAME", '"dbblue"'
+        }
+        network {
+            dimension "source"
+        }
+        mock {
+            dimension "source"
         }
     }
     packagingOptions {
@@ -65,7 +61,6 @@ android {
 }
 
 dependencies {
-
     implementation project(":domain")
     implementation project(":data")
 

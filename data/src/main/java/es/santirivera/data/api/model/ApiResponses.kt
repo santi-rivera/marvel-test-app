@@ -12,22 +12,11 @@ data class ResponseCharacterList(
     val results: ArrayList<ResponseCharacter>
 )
 
-data class ComicList(
-    val items: ArrayList<ComicResponse>
-)
-
-data class ComicResponse(
-    val name: String
-)
-
 data class ResponseCharacter(
     val id: String = "",
     val name: String = "",
     val description: String = "",
     val thumbnail: Thumbnail? = null,
-    val comics: ComicList,
-    val stories: ComicList,
-    val series: ComicList,
     val urls: ArrayList<CharacterUrl>
 )
 
