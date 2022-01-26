@@ -50,7 +50,6 @@ class CharacterListFragment : MarvelFragment(),
         setupRecyclerView(recyclerView)
         lifecycleScope.launch {
             characterListViewModel.uiState.collect { uiState ->
-                // New value received
                 if (uiState != lastState){
                     if (uiState.list != null) {
                         endLoad()
@@ -66,7 +65,9 @@ class CharacterListFragment : MarvelFragment(),
                 }
             }
         }
-        startLoad()
+        if (lastState.list.isNullOrEmpty()){
+            startLoad()
+        }
     }
 
 
