@@ -11,7 +11,7 @@ on one of the characters, you get redirected to a new Fragment with a character 
 
 MVVM (Model View ViewModel). It also uses SOLID principles.
 
-The app is divided in three layer (app, domain and data).
+The app is divided in three layers (app, domain and data).
 
 | Layer | Description |
 | --- | --- |
