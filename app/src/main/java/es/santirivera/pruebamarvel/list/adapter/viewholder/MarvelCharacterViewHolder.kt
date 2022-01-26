@@ -1,4 +1,4 @@
-package es.santirivera.pruebamarvel.list
+package es.santirivera.pruebamarvel.list.adapter.viewholder
 
 import androidx.recyclerview.widget.RecyclerView
 import es.santirivera.domain.model.MarvelCharacter

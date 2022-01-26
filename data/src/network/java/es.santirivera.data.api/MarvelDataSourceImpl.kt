@@ -1,5 +1,6 @@
 package es.santirivera.data.api
 
+import android.content.res.AssetManager
 import es.santirivera.data.api.model.ResponseCharacterListContainer
 import java.net.UnknownHostException
 

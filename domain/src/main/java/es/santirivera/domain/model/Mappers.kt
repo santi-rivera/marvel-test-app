@@ -28,6 +28,14 @@ fun MarvelCharacterDatabase.toMarvelCharacter(): MarvelCharacter {
     return MarvelCharacter(id, name, description, thumbnail, wikiUrl)
 }
 
+fun List<MarvelCharacterDatabase>.toMarvelCharacterList():List<MarvelCharacter>{
+    val list = ArrayList<MarvelCharacter>()
+    for (character in this){
+        list.add(character.toMarvelCharacter())
+    }
+    return list
+}
+
 fun ResponseCharacter.getWikiUrl(): String {
     var wikiUrl = ""
     for (url in urls) {

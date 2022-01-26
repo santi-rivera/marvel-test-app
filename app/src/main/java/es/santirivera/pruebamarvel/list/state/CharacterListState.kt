@@ -1,4 +1,4 @@
-package es.santirivera.pruebamarvel.list
+package es.santirivera.pruebamarvel.list.state
 
 import es.santirivera.domain.model.MarvelCharacter
 
@@ -11,5 +11,4 @@ class CharacterListState {
         if (other is CharacterListState) return timeStamp == (other).timeStamp
         return false
     }
-
 }

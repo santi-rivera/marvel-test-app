@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -12,8 +13,14 @@ import dagger.hilt.android.AndroidEntryPoint
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.MarvelFragment
 import es.santirivera.pruebamarvel.databinding.FragmentItemListBinding
+import es.santirivera.pruebamarvel.list.adapter.MarvelCharacterAdapter
+import es.santirivera.pruebamarvel.list.adapter.viewholder.MarvelCharacterViewHolder
+import es.santirivera.pruebamarvel.list.state.CharacterListState
 import es.santirivera.pruebamarvel.util.EndlessRecyclerViewScrollListener
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.launch
 
+@ExperimentalCoroutinesApi
 @AndroidEntryPoint
 class CharacterListFragment : MarvelFragment(),
     MarvelCharacterViewHolder.OnCharacterClickedCallback {
@@ -41,19 +48,22 @@ class CharacterListFragment : MarvelFragment(),
         super.onViewCreated(view, savedInstanceState)
         val recyclerView: RecyclerView = binding.itemList
         setupRecyclerView(recyclerView)
-        characterListViewModel.state.observe(viewLifecycleOwner) {
-            if (it != lastState) {
-                if (it.list != null) {
-                    endLoad()
-                    adapter.setNewValues(it.list!!)
-                } else if (it.error != null) {
-                    val retry = handleErrors(it.error!!)
-                    scrollListener.loadFailed()
-                    if (retry) {
-                        characterListViewModel.requestCharacters(adapter.itemCount + 1)
+        lifecycleScope.launch {
+            characterListViewModel.uiState.collect { uiState ->
+                // New value received
+                if (uiState != lastState){
+                    if (uiState.list != null) {
+                        endLoad()
+                        adapter.setNewValues(uiState.list!!)
+                    } else if (uiState.error != null) {
+                        val retry = handleErrors(uiState.error!!)
+                        scrollListener.loadFailed()
+                        if (retry) {
+                            characterListViewModel.requestCharacters()
+                        }
                     }
+                    lastState = uiState
                 }
-                lastState = it
             }
         }
         startLoad()
@@ -69,7 +79,7 @@ class CharacterListFragment : MarvelFragment(),
                     10
                 ) {
                 override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView?) {
-                    characterListViewModel.requestCharacters(totalItemsCount)
+                    characterListViewModel.requestCharacters()
                     startLoad()
                 }
             }
