@@ -1,12 +1,12 @@
 package es.santirivera.pruebamarvel
 
+import android.app.Dialog
+import android.view.Window
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import es.santirivera.domain.exception.EmptyListException
 import retrofit2.HttpException
 import java.net.UnknownHostException
-import android.app.Dialog
-import android.view.Window
 
 
 abstract class MarvelFragment : Fragment() {
@@ -52,7 +52,7 @@ abstract class MarvelFragment : Fragment() {
         return retry
     }
 
-    fun startLoad(){
+    fun startLoad() {
         if (!loading) {
             dialog = createDialog()
             dialog.show()
@@ -60,14 +60,14 @@ abstract class MarvelFragment : Fragment() {
         }
     }
 
-    fun endLoad(){
+    fun endLoad() {
         if (loading) {
             dialog.hide()
             loading = false
         }
     }
 
-    private fun createDialog(): Dialog{
+    private fun createDialog(): Dialog {
         val dialog = Dialog(requireContext())
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
         dialog.setCancelable(false)

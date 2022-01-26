@@ -1,9 +1,7 @@
 package es.santirivera.data.api
 
-import es.santirivera.data.api.model.ResponseCharacter
 import es.santirivera.data.api.model.ResponseCharacterListContainer
 import retrofit2.http.GET
-import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MarvelApi {

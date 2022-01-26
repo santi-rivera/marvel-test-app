@@ -1,6 +1,5 @@
 package es.santirivera.domain.usecase
 
-import es.santirivera.domain.model.MarvelCharacter
 import kotlinx.coroutines.*
 
 abstract class BaseUseCase<in Request, Response> : UseCase<Request, Response> {
@@ -11,7 +10,7 @@ abstract class BaseUseCase<in Request, Response> : UseCase<Request, Response> {
     @Throws(Exception::class)
     abstract suspend fun run(params: Request? = null): Response
 
-    open fun invoke(params: Request? = null, callback: Callback<Response>?){
+    open fun invoke(params: Request? = null, callback: Callback<Response>?) {
         uiScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
@@ -33,7 +32,7 @@ abstract class BaseUseCase<in Request, Response> : UseCase<Request, Response> {
         invoke(params, callback)
     }
 
-    fun executeNoCallback(params:Request?){
+    fun executeNoCallback(params: Request?) {
         invoke(params, null)
     }
 }

@@ -9,11 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.text.bold
 import dagger.hilt.android.AndroidEntryPoint
-import es.santirivera.pruebamarvel.util.loadUrl
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.pruebamarvel.MarvelFragment
 import es.santirivera.pruebamarvel.R
 import es.santirivera.pruebamarvel.databinding.FragmentItemDetailBinding
+import es.santirivera.pruebamarvel.util.loadUrl
 
 
 @AndroidEntryPoint

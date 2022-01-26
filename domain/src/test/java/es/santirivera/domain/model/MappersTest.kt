@@ -4,9 +4,8 @@ import es.santirivera.data.api.model.CharacterUrl
 import es.santirivera.data.api.model.ResponseCharacter
 import es.santirivera.data.api.model.Thumbnail
 import es.santirivera.data.api.room.MarvelCharacterDatabase
+import org.junit.Assert.assertEquals
 import org.junit.Test
-
-import org.junit.Assert.*
 
 class MappersTest {
 
@@ -25,14 +24,20 @@ class MappersTest {
     }
 
     @Test
-    fun testResponseToCharacter(){
+    fun testResponseToCharacter() {
         val marvelCharacter = MarvelCharacter("a", "b", "c", "image.jpg", "www.google.com")
         val thumbnail = Thumbnail(path = "image", extension = "jpg")
-        val wikiCharacterUrl = CharacterUrl(type = "wiki", url="www.google.com")
+        val wikiCharacterUrl = CharacterUrl(type = "wiki", url = "www.google.com")
         val characterUrls = ArrayList<CharacterUrl>()
         characterUrls.add(wikiCharacterUrl)
 
-        val responseCharacter = ResponseCharacter(id = "a", name="b", description = "c", thumbnail = thumbnail, urls = characterUrls)
+        val responseCharacter = ResponseCharacter(
+            id = "a",
+            name = "b",
+            description = "c",
+            thumbnail = thumbnail,
+            urls = characterUrls
+        )
         val responseAsMarvelCharacter = responseCharacter.toMarvelCharacter()
 
         assertEquals(marvelCharacter.id, responseAsMarvelCharacter.id)
@@ -43,14 +48,21 @@ class MappersTest {
     }
 
     @Test
-    fun testResponseToDatabase(){
-        val marvelDatabaseCharacter = MarvelCharacterDatabase("a", "b", "c", "image.jpg", "www.google.com")
+    fun testResponseToDatabase() {
+        val marvelDatabaseCharacter =
+            MarvelCharacterDatabase("a", "b", "c", "image.jpg", "www.google.com")
         val thumbnail = Thumbnail(path = "image", extension = "jpg")
-        val wikiCharacterUrl = CharacterUrl(type = "wiki", url="www.google.com")
+        val wikiCharacterUrl = CharacterUrl(type = "wiki", url = "www.google.com")
         val characterUrls = ArrayList<CharacterUrl>()
         characterUrls.add(wikiCharacterUrl)
 
-        val responseCharacter = ResponseCharacter(id = "a", name="b", description = "c", thumbnail = thumbnail, urls = characterUrls)
+        val responseCharacter = ResponseCharacter(
+            id = "a",
+            name = "b",
+            description = "c",
+            thumbnail = thumbnail,
+            urls = characterUrls
+        )
         val responseAsDatabaseCharacter = responseCharacter.toDatabaseCharacter()
 
         assertEquals(marvelDatabaseCharacter.id, responseAsDatabaseCharacter.id)

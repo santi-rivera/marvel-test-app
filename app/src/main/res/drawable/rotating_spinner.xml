@@ -7,4 +7,4 @@
     android:pivotY="50%"
     android:repeatCount="infinite"
     android:toDegrees="1080"
-    android:duration="1000"/>
+    android:duration="1000" />

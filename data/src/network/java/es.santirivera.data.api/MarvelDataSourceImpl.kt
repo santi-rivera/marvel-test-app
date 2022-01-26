@@ -1,6 +1,5 @@
 package es.santirivera.data.api
 
-import es.santirivera.data.api.model.ResponseCharacter
 import es.santirivera.data.api.model.ResponseCharacterListContainer
 import java.net.UnknownHostException
 

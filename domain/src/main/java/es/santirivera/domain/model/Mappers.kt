@@ -5,7 +5,13 @@ import es.santirivera.data.api.room.MarvelCharacterDatabase
 
 
 fun ResponseCharacter.toDatabaseCharacter(): MarvelCharacterDatabase {
-    return MarvelCharacterDatabase(id, name, description, "${thumbnail?.path}.${thumbnail?.extension}", getWikiUrl())
+    return MarvelCharacterDatabase(
+        id,
+        name,
+        description,
+        "${thumbnail?.path}.${thumbnail?.extension}",
+        getWikiUrl()
+    )
 }
 
 fun ResponseCharacter.toMarvelCharacter(): MarvelCharacter {
@@ -18,7 +24,7 @@ fun ResponseCharacter.toMarvelCharacter(): MarvelCharacter {
     )
 }
 
-fun MarvelCharacterDatabase.toMarvelCharacter():MarvelCharacter{
+fun MarvelCharacterDatabase.toMarvelCharacter(): MarvelCharacter {
     return MarvelCharacter(id, name, description, thumbnail, wikiUrl)
 }
 

@@ -14,7 +14,7 @@ class MarvelDataSourceImpl(
 ) : MarvelDataSource {
 
     override suspend fun getCharacterList(limit: Int, offset: Int): ResponseCharacterListContainer {
-        val inSt : InputStream = assetsManager.open("character_list.json")
+        val inSt: InputStream = assetsManager.open("character_list.json")
         val reader = JsonReader(BufferedReader(InputStreamReader(inSt)))
         return Gson().fromJson(reader, ResponseCharacterListContainer::class.java)
     }

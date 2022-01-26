@@ -1,4 +1,3 @@
-
 package es.santirivera.data.api.hash
 
 import java.security.MessageDigest

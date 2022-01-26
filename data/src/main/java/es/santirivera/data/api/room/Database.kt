@@ -7,5 +7,5 @@ import androidx.room.RoomDatabase
 abstract class Database : RoomDatabase() {
 
     abstract fun marvelCharacterDao(): MarvelCharacterDao
-    
+
 }

@@ -6,12 +6,12 @@ import org.junit.Test
 
 class HashingTest {
     @Test
-    fun testHash(){
+    fun testHash() {
         val private = "Asdf"
         val public = "Asdf2"
         val timestamp = 1234L
         val expectedResult = "7b3c3576aa87a25aa003010c97bf8bf9"
 
-        Assert.assertEquals(expectedResult, Hash.generate(timestamp,private,public))
+        Assert.assertEquals(expectedResult, Hash.generate(timestamp, private, public))
     }
 }

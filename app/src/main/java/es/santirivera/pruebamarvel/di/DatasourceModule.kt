@@ -24,7 +24,10 @@ class DatasourceModule {
 
     @Provides
     @Singleton
-    fun providesMarvelDataSource(marvelApi: MarvelApi, assetManager:AssetManager): MarvelDataSource =
+    fun providesMarvelDataSource(
+        marvelApi: MarvelApi,
+        assetManager: AssetManager
+    ): MarvelDataSource =
         MarvelDataSourceImpl(marvelApi, assetManager)
 
 }
