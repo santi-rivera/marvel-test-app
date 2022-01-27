@@ -1,44 +1,57 @@
 package es.santirivera.pruebamarvel.list
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.domain.usecase.Callback
 import es.santirivera.domain.usecase.db.ClearDatabaseUseCase
-import es.santirivera.domain.usecase.list.GetCharacterListUseCase
+import es.santirivera.domain.usecase.list.flow.GetCharacterListFlowUseCase
+import es.santirivera.domain.usecase.list.load.LoadMoreCharactersUseCase
+import es.santirivera.pruebamarvel.list.state.CharacterListState
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@ExperimentalCoroutinesApi
 @HiltViewModel
 class CharacterListViewModel @Inject constructor(
-    private val getCharactersUseCase: GetCharacterListUseCase,
+    private val loadMoreCharactersUseCase: LoadMoreCharactersUseCase,
+    private val getCharacterListFlowUseCase: GetCharacterListFlowUseCase,
     clearDatabaseUseCase: ClearDatabaseUseCase
 ) :
-    ViewModel(), Callback<List<MarvelCharacter>> {
+    ViewModel(), Callback<Boolean> {
 
-    private val _state = MutableLiveData<CharacterListState>()
-    val state: LiveData<CharacterListState> get() = _state
+    private val _uiState = MutableStateFlow(CharacterListState())
+    val uiState: StateFlow<CharacterListState> = _uiState
+
 
     init {
         clearDatabaseUseCase.execute(null, object : Callback<Boolean> {
             override fun onSuccess(response: Boolean) {
-                requestCharacters(1)
+                requestCharacters()
             }
 
             override fun onError(error: Exception) {
                 reportError(error)
             }
-
         })
+        viewModelScope.launch {
+            getCharacterListFlowUseCase.resultFlow.collect {
+                reportResult(it)
+            }
+        }
+
     }
 
-    fun requestCharacters(offset: Int) {
-        getCharactersUseCase.execute(null, this)
+    fun requestCharacters() {
+        loadMoreCharactersUseCase.execute(null, this)
     }
 
-    override fun onSuccess(response: List<MarvelCharacter>) {
-        reportResult(response)
+    override fun onSuccess(response: Boolean) {
+        //reportResult(response)
     }
 
     override fun onError(error: Exception) {
@@ -48,13 +61,13 @@ class CharacterListViewModel @Inject constructor(
     private fun reportResult(response: List<MarvelCharacter>) {
         val state = CharacterListState()
         state.list = response
-        _state.value = state
+        _uiState.value = state
     }
 
     private fun reportError(error: Exception) {
         val state = CharacterListState()
         state.error = error
-        _state.value = state
+        _uiState.value = state
     }
 
 }
