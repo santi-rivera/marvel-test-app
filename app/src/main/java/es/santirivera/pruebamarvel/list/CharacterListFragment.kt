@@ -50,6 +50,7 @@ class CharacterListFragment : MarvelFragment(),
                     val retry = handleErrors(it.error!!)
                     scrollListener.loadFailed()
                     if (retry) {
+                        endLoad()
                         characterListViewModel.requestCharacters(adapter.itemCount + 1)
                     }
                 }
