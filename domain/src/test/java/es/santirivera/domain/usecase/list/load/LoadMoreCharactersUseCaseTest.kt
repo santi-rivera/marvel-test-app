@@ -1,8 +1,9 @@
-package es.santirivera.domain.usecase.list
+package es.santirivera.domain.usecase.list.load
 
-import es.santirivera.domain.model.MarvelCharacter
 import es.santirivera.domain.repo.CharacterRepository
 import es.santirivera.domain.usecase.Callback
+import es.santirivera.domain.usecase.db.ClearDatabaseUseCase
+import es.santirivera.domain.usecase.db.ClearDatabaseUseCaseImpl
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -14,17 +15,17 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.spy
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class GetCharactersUseCaseTest {
+class LoadMoreCharactersUseCaseTest {
 
     @Mock
     private lateinit var characterRepository: CharacterRepository
 
-    private lateinit var useCase: GetCharacterListUseCase
+    private lateinit var useCase: LoadMoreCharactersUseCase
 
     @ExperimentalCoroutinesApi
     private val dispatcher = StandardTestDispatcher()
@@ -40,15 +41,15 @@ class GetCharactersUseCaseTest {
     fun setup() {
         Dispatchers.setMain(dispatcher)
         MockitoAnnotations.openMocks(this)
-        useCase = spy(GetCharacterListUseCaseImpl(characterRepository))
+        useCase = Mockito.spy(LoadMoreCharactersUseCaseImpl(characterRepository))
     }
 
     @Test
     fun testUseCase() {
         runBlocking {
-            useCase.execute(null, object : Callback<List<MarvelCharacter>> {
-                override fun onSuccess(response: List<MarvelCharacter>) {
-                    assert(response.isNotEmpty())
+            useCase.execute(null, object : Callback<Boolean> {
+                override fun onSuccess(response: Boolean) {
+                    assert(response)
                 }
 
                 override fun onError(error: Exception) {
@@ -57,5 +58,5 @@ class GetCharactersUseCaseTest {
             })
         }
     }
-
+}
 }
